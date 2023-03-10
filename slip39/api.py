@@ -292,7 +292,7 @@ class Account:
         ethereum	= 'ETH',
         bitcoin		= 'BTC',
         litecoin	= 'LTC',
-        cyberyen        = 'CY'
+        cyberyen        = 'CY',
         dogecoin	= 'DOGE',
         cronos		= 'CRO',
         binance		= 'BNB',
