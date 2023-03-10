@@ -1,4 +1,3 @@
-
 #
 # Python-slip39 -- Ethereum SLIP-39 Account Generation and Recovery
 #
@@ -268,7 +267,7 @@ class Account:
 
       ._cryptocurrency.SYMBOL:	The short name of the crypto-asset, eg 'XRP'
 
-    Supports producing Legacy addresses for Bitcoin, and Litecoin.  Doge (D...) and Ethereum (0x...)
+    Supports producing Legacy addresses for Bitcoin, Litecoin and Cyberyen.  Doge (D...) and Ethereum (0x...)
     addresses use standard BIP44 derivation.
 
     | Crypto | Semantic | Path              | Address | Support |
@@ -282,6 +281,9 @@ class Account:
     | LTC    | Legacy   | m/44'/  2'/0'/0/0 | L...    |         |
     |        | SegWit   | m/44'/  2'/0'/0/0 | M...    |         |
     |        | Bech32   | m/84'/  2'/0'/0/0 | ltc1... |         |
+    | CY     | Legacy   | m/44'/  2'/0'/0/0 | C...    |         |
+    |        | SegWit   | m/44'/  2'/0'/0/0 | A...    |         |
+    |        | Bech32   | m/84'/  2'/0'/0/0 | cy1...  |         |
     | DOGE   | Legacy   | m/44'/  3'/0'/0/0 | D...    |         |
     | XRP    | Legacy   | m/44'/144'/0'/0/0 | r...    | Beta    |
 
@@ -290,6 +292,7 @@ class Account:
         ethereum	= 'ETH',
         bitcoin		= 'BTC',
         litecoin	= 'LTC',
+        cyberyen        = 'CY'
         dogecoin	= 'DOGE',
         cronos		= 'CRO',
         binance		= 'BNB',
@@ -305,6 +308,7 @@ class Account:
         ETH		= "legacy",
         BTC		= "bech32",
         LTC		= "bech32",
+        CY              = "bech32",
         DOGE		= "legacy",
         CRO		= "bech32",
         BNB		= "legacy",
@@ -344,6 +348,11 @@ class Account:
             bech32	= "m/84'/0'/0'/0/0",
         ),
         LTC		= dict(
+            legacy	= "m/44'/2'/0'/0/0",
+            segwit	= "m/44'/2'/0'/0/0",
+            bech32	= "m/84'/2'/0'/0/0",
+        ),
+        CY		= dict(
             legacy	= "m/44'/2'/0'/0/0",
             segwit	= "m/44'/2'/0'/0/0",
             bech32	= "m/84'/2'/0'/0/0",
@@ -777,7 +786,7 @@ def cryptopaths_parser( cryptocurrency, edit=None, hardened_defaults=False ):
     Adjusts the provided derivation paths by an optional eg. "../-" path adjustment.
 
     """
-    cryptopaths 		= []
+    cryptopaths                 = []
     for crypto in cryptocurrency or CRYPTO_PATHS:
         try:
             if type(crypto) is str:
@@ -895,7 +904,7 @@ def create(
     name: str,
     group_threshold: int,
     groups: Dict[str,Tuple[int, int]],
-    master_secret: bytes	= None,	        # Default: generate 128-bit Seed Entropy
+    master_secret: bytes	= None,         # Default: generate 128-bit Seed Entropy
     passphrase: bytes		= b"",
     using_bip39: bool		= False,        # Produce wallet Seed from master_secret Entropy using BIP-39 generation
     iteration_exponent: int	= 1,
@@ -1134,7 +1143,7 @@ def address(
 
 def addresses(
     master_secret: Union[str,bytes],
-    crypto: str	 		= None,  # default 'ETH'
+    crypto: str                 = None,  # default 'ETH'
     paths: str			= None,  # default: The crypto's path_default; supports ranges
     format: str			= None,
     allow_unbounded: bool	= True,

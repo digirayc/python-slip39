@@ -42,7 +42,7 @@ sets of 20 words is difficult, error-prone and time consuming.
 
   #+BEGIN_QUOTE
   Your keys, your Bitcoin.  Not your keys, not your Bitcoin.
-  
+
   ---Andreas Antonopoulos
   #+END_QUOTE
 
@@ -57,7 +57,7 @@ sets of 20 words is difficult, error-prone and time consuming.
 
   On an secure (ideally air-gapped) computer, new seeds can /safely/ be generated (*without
   trusting this program*) and the PDF saved to a USB drive for printing (or directly printed without
-  the file being saved to disk.).  Presently, =slip39= can output example ETH, BTC, LTC, DOGE, BNB,
+  the file being saved to disk.).  Presently, =slip39= can output example ETH, BTC, LTC, CY, DOGE, BNB,
   CRO and XRP addresses derived from the seed, to /illustrate/ what accounts are associated with the
   backed-up seed.  Recovery of the seed to a [[https://trezor.go2cloud.org/SH1Y][Trezor "Model T"]] is simple, by entering the mnemonics
   right on the device.
@@ -173,14 +173,14 @@ sets of 20 words is difficult, error-prone and time consuming.
      Personal-2021-12-22+15.45.36-0xb44A2011A99596671d5952CdC22816089f142FB3.pdf
    #+END_EXAMPLE
    #+LATEX: }
-  
+
    The resultant PDF will be output into the designated file.
-  
+
    This PDF file contains business card sized SLIP-39 Mnemonic cards, and will print on a single
    page of 8-1/2"x11" paper or card stock, and the cards can be cut out (=--card index=, =credit=,
    =half= (page), =third= and =quarter= are also available, as well as 4x6 =photo= and custom
    ="(<h>,<w>),<margin>"=).
-  
+
    To get the data printed on the terminal as in this example (so you could write it down on cards
    instead), add a =-v= (to see it logged in a tabular format), or =--text= to have it printed to
    stdout in full lines (ie. for pipelining to other programs).
@@ -193,14 +193,14 @@ sets of 20 words is difficult, error-prone and time consuming.
     example?
 
     The =slip39.gui= (and the macOS/win32 SLIP-39.App) support output of standard BIP-38 encrypted wallets
-    for Bitcoin-like cryptocurrencies such as BTC, LTC and DOGE.  It also outputs encrypted Ethereum
+    for Bitcoin-like cryptocurrencies such as BTC, LTC, CY and DOGE.  It also outputs encrypted Ethereum
     JSON wallets for ETH.  Here is how to produce them (from a test secret Seed; exclude =--secret
     ffff...= for yours!):
 
     #+LATEX: {\scriptsize
     #+BEGIN_SRC bash :exports both :results output
-    slip39 -c ETH -c BTC -c DOGE -c LTC --secret ffffffffffffffffffffffffffffffff \
-        --no-card --wallet password --wallet-hint 'bad:pass...' 2>&1
+    slip39 -c ETH -c BTC -c DOGE -c LTC -c CY --secret ffffffffffffffffffffffffffffffff \
+	--no-card --wallet password --wallet-hint 'bad:pass...' 2>&1
     #+END_SRC
 
     #+RESULTS:
@@ -215,7 +215,7 @@ sets of 20 words is difficult, error-prone and time consuming.
     #+LATEX: }
 
     And what they look like:
-    
+
     #+CAPTION: Paper Wallets (from =--secret ffff...=)
     #+ATTR_LATEX: :width 5in :options angle=0
     [[./images/slip39-wallets.png]]
@@ -226,9 +226,9 @@ sets of 20 words is difficult, error-prone and time consuming.
     #+LATEX: {\scriptsize
     #+BEGIN_SRC bash :exports both :results output
     slip39-recovery -v \
-        --mnemonic "material leaf acrobat romp charity capital omit skunk change firm eclipse crush fancy best tracks flip grownup plastic chew peanut" \
-        --mnemonic "material leaf beard romp disaster duke flame uncover group slice guest blue gums duckling total suitable trust guitar payment platform" \
-            2>&1
+	--mnemonic "material leaf acrobat romp charity capital omit skunk change firm eclipse crush fancy best tracks flip grownup plastic chew peanut" \
+	--mnemonic "material leaf beard romp disaster duke flame uncover group slice guest blue gums duckling total suitable trust guitar payment platform" \
+	    2>&1
     #+END_SRC
 
     #+RESULTS:
@@ -240,15 +240,15 @@ sets of 20 words is difficult, error-prone and time consuming.
 
     You can run this as a command-line pipeline.  Here, we use some SLIP-39 Mnemonics that encode the =ffff...= Seed Entropy;
     note that the wallets match those output above:
-    
+
     #+LATEX: {\scriptsize
     #+BEGIN_SRC bash :exports both :results output
     slip39-recovery \
-        --mnemonic "material leaf acrobat romp charity capital omit skunk change firm eclipse crush fancy best tracks flip grownup plastic chew peanut" \
-        --mnemonic "material leaf beard romp disaster duke flame uncover group slice guest blue gums duckling total suitable trust guitar payment platform" \
-    | slip39 -c ETH -c BTC -c DOGE -c LTC --secret - \
-        --no-card --wallet password --wallet-hint 'bad:pass...' \
-            2>&1
+	--mnemonic "material leaf acrobat romp charity capital omit skunk change firm eclipse crush fancy best tracks flip grownup plastic chew peanut" \
+	--mnemonic "material leaf beard romp disaster duke flame uncover group slice guest blue gums duckling total suitable trust guitar payment platform" \
+    | slip39 -c ETH -c BTC -c DOGE -c LTC -c CY --secret - \
+	--no-card --wallet password --wallet-hint 'bad:pass...' \
+	    2>&1
     #+END_SRC
 
     #+RESULTS:
@@ -271,7 +271,7 @@ sets of 20 words is difficult, error-prone and time consuming.
     When you import your SLIP-39 Seed into a Trezor, you gain access to all derived HD
     cryptocurrency wallets supported directly by that hardware wallet, and *indirectly*, to any coin
     and/or blockchain network supported by any wallet software (eg. Metamask).
-    
+
     | Crypto | Semantic | Path             | Address | Support |
     |--------+----------+------------------+---------+---------|
     | ETH    | Legacy   | m/44'/60'/0'/0/0 | 0x...   |         |
@@ -283,9 +283,12 @@ sets of 20 words is difficult, error-prone and time consuming.
     | LTC    | Legacy   | m/44'/ 2'/0'/0/0 | L...    |         |
     |        | SegWit   | m/44'/ 2'/0'/0/0 | M...    |         |
     |        | Bech32   | m/84'/ 2'/0'/0/0 | ltc1... |         |
+    | CY     | Legacy   | m/44'/ 2'/0'/0/0 | C...    |         |
+    |        | SegWit   | m/44'/ 2'/0'/0/0 | A...    |         |
+    |        | Bech32   | m/84'/ 2'/0'/0/0 | cy1...  |         |
     | DOGE   | Legacy   | m/44'/ 3'/0'/0/0 | D...    |         |
 
-**** ETH, BTC, LTC, DOGE
+**** ETH, BTC, LTC, CY, DOGE
 
      These coins are natively supported both directly by the Trezor hardware wallet, and by most
      software wallets and "web3" platforms that interact with the Trezor, or can import the BIP-38
@@ -346,13 +349,13 @@ sets of 20 words is difficult, error-prone and time consuming.
     :               [--passphrase PASSPHRASE] [-C CARD] [--no-card] [--paper PAPER]
     :               [--cover] [--no-cover] [--text] [--watermark WATERMARK]
     :               [names ...]
-    : 
+    :
     : Create and output SLIP-39 encoded Seeds and Paper Wallets to a PDF file.
-    : 
+    :
     : positional arguments:
     :   names                 Account names to produce; if --secret Entropy is
     :                         supplied, only one is allowed.
-    : 
+    :
     : options:
     :   -h, --help            show this help message and exit
     :   -v, --verbose         Display logging information.
@@ -369,12 +372,12 @@ sets of 20 words is difficult, error-prone and time consuming.
     :                         'Frens(3/5)' ).
     :   -f FORMAT, --format FORMAT
     :                         Specify crypto address formats: legacy, segwit,
-    :                         bech32; default: ETH:legacy, BTC:bech32, LTC:bech32,
+    :                         bech32; default: ETH:legacy, BTC:bech32, LTC:bech32, CY:bech32
     :                         DOGE:legacy, CRO:bech32, BNB:legacy, XRP:legacy
     :   -c CRYPTOCURRENCY, --cryptocurrency CRYPTOCURRENCY
     :                         A crypto name and optional derivation path (eg.
     :                         '../<range>/<range>'); defaults: ETH:m/44'/60'/0'/0/0,
-    :                         BTC:m/84'/0'/0'/0/0, LTC:m/84'/2'/0'/0/0,
+    :                         BTC:m/84'/0'/0'/0/0, LTC:m/84'/2'/0'/0/0, CY:m/84'/2'/0'/0/0,
     :                         DOGE:m/44'/3'/0'/0/0, CRO:m/44'/60'/0'/0/0,
     :                         BNB:m/44'/60'/0'/0/0, XRP:m/44'/144'/0'/0/0
     :   -p PATH, --path PATH  Modify all derivation paths by replacing the final
@@ -464,9 +467,9 @@ sets of 20 words is difficult, error-prone and time consuming.
     #+begin_example
     : usage: slip39-recovery [-h] [-v] [-q] [-m MNEMONIC] [-e] [-b] [-u] [--binary]
     :                        [-p PASSPHRASE]
-    : 
+    :
     : Recover and output secret Seed from SLIP-39 or BIP-39 Mnemonics
-    : 
+    :
     : options:
     :   -h, --help            show this help message and exit
     :   -v, --verbose         Display logging information.
@@ -483,28 +486,28 @@ sets of 20 words is difficult, error-prone and time consuming.
     :   -p PASSPHRASE, --passphrase PASSPHRASE
     :                         Decrypt the SLIP-39 or BIP-39 master secret w/ this
     :                         passphrase, '-' reads it from stdin (default: None/'')
-    : 
+    :
     : If you obtain a threshold number of SLIP-39 mnemonics, you can recover the original
     : secret Seed Entropy, and then re-generate one or more wallets from it.
-    : 
+    :
     : Enter the mnemonics when prompted and/or via the command line with -m |--mnemonic "...".
-    : 
+    :
     : The secret Seed Entropy can then be used to generate a new SLIP-39 encoded wallet:
-    : 
+    :
     :     python3 -m slip39 --secret = "ab04...7f"
-    : 
+    :
     : SLIP-39 Mnemonics may be encrypted with a passphrase; this is *not* Ledger-compatible, so it rarely
     : recommended!  Typically, on a Trezor "Model T", you recover using your SLIP-39 Mnemonics, and then
     : use the "Hidden wallet" feature (passwords entered on the device) to produce alternative sets of
     : accounts.
-    : 
+    :
     : BIP-39 Mnemonics can be backed up as SLIP-39 Mnemonics, in two ways:
-    : 
+    :
     : 1) The actual BIP-39 standard 512-bit Seed can be generated by supplying --passphrase, but only at
     : the cost of 59-word SLIP-39 mnemonics.  This is because the *output* 512-bit BIP-39 Seed must be
     : stored in SLIP-39 -- not the *input* 128-, 160-, 192-, 224-, or 256-bit entropy used to create the
     : original BIP-39 mnemonic phrase.
-    : 
+    :
     : 2) The original BIP-39 12- or 24-word, 128- to 256-bit Seed Entropy can be recovered by supplying
     : --entropy.  This modifies the BIP-39 recovery to return the original BIP-39 Mnemonic Entropy, before
     : decryption and seed generation.  It has no effect for SLIP-39 recovery.
@@ -555,7 +558,7 @@ sets of 20 words is difficult, error-prone and time consuming.
    of groups of addresses.
 
 *** =slip39-generator= Synopsis
-   
+
     #+LATEX: {\scriptsize
     #+BEGIN_SRC bash :exports both :results output
     slip39-generator --help --version         | sed 's/^/: /' # (just for output formatting)
@@ -568,9 +571,9 @@ sets of 20 words is difficult, error-prone and time consuming.
     :                         [-d DEVICE] [--baudrate BAUDRATE] [-e ENCRYPT]
     :                         [--decrypt ENCRYPT] [--enumerated] [--no-enumerate]
     :                         [--receive] [--corrupt CORRUPT]
-    : 
+    :
     : Generate public wallet address(es) from a secret seed
-    : 
+    :
     : options:
     :   -h, --help            show this help message and exit
     :   -v, --verbose         Display logging information.
@@ -581,7 +584,7 @@ sets of 20 words is difficult, error-prone and time consuming.
     :                         (eg. output from slip39.recover)
     :   -f FORMAT, --format FORMAT
     :                         Specify crypto address formats: legacy, segwit,
-    :                         bech32; default: ETH:legacy, BTC:bech32, LTC:bech32,
+    :                         bech32; default: ETH:legacy, BTC:bech32, LTC:bech32, CY:besh32,
     :                         DOGE:legacy, CRO:bech32, BNB:legacy, XRP:legacy
     :   --xpub                Output xpub... instead of cryptocurrency wallet
     :                         address (and trim non-hardened default path segments)
@@ -608,17 +611,17 @@ sets of 20 words is difficult, error-prone and time consuming.
     :   --no-enumerate        Disable enumeration of output records
     :   --receive             Receive a stream of slip.generator output
     :   --corrupt CORRUPT     Corrupt a percentage of output symbols
-    : 
+    :
     : Once you have a secret seed (eg. from slip39.recovery), you can generate a sequence
     : of HD wallet addresses from it.  Emits rows in the form:
-    : 
+    :
     :     <enumeration> [<address group(s)>]
-    : 
+    :
     : If the output is to be transmitted by an insecure channel (eg. a serial port), which may insert
     : errors or allow leakage, it is recommended that the records be encrypted with a cryptographic
     : function that includes a message authentication code.  We use ChaCha20Poly1305 with a password and a
     : random nonce generated at program start time.  This nonce is incremented for each record output.
-    : 
+    :
     : Since the receiver requires the nonce to decrypt, and we do not want to separately transmit the
     : nonce and supply it to the receiver, the first record emitted when --encrypt is specified is the
     : random nonce, encrypted with the password, itself with a known nonce of all 0 bytes.  The plaintext
@@ -656,7 +659,7 @@ sets of 20 words is difficult, error-prone and time consuming.
     #+LATEX: {\scriptsize
     #+BEGIN_SRC bash :exports both :results output
     ( python3 -m slip39.recovery --bip39 --mnemonic 'zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo wrong' \
-        | python3 -m slip39.generator --secret - --path '../-3' --format 'BTC:segwit' --crypto 'DOGE' ) 2>&1
+	| python3 -m slip39.generator --secret - --path '../-3' --format 'BTC:segwit' --crypto 'DOGE' ) 2>&1
     #+END_SRC
 
     #+RESULTS:
@@ -673,13 +676,13 @@ sets of 20 words is difficult, error-prone and time consuming.
     #+LATEX: {\scriptsize
     #+BEGIN_SRC bash :exports both :results output
     ( slip39-recovery --bip39 --mnemonic 'zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo wrong' \
-        | slip39-generator --secret - --path '../-3' --encrypt 'password' ) 2>&1 \
-            | sed -E 's/^(.{100})(.{1,})$/\1.../'  # (shorten output)
+	| slip39-generator --secret - --path '../-3' --encrypt 'password' ) 2>&1 \
+	    | sed -E 's/^(.{100})(.{1,})$/\1.../'  # (shorten output)
     #+END_SRC
 
     #+RESULTS:
-    : 
-    : 
+    :
+    :
     : nonce: 06b795e5223df33f0db920a25a96fca93594343b4f18cc86c196d946
     :     0: c8b4c7181974f6f1e51ce2b305df3a243b849d5784f365e1d69bd9593450324dcc0723502295c14ea43ba9e706047...
     :     1: 2df410189c325bdcf04c951d40d1e8afc3e2bfab15cf1bcf8431b8ffc540838df2b884651eef888fa6baaf9c9f364...
@@ -693,8 +696,8 @@ sets of 20 words is difficult, error-prone and time consuming.
     #+LATEX: {\scriptsize
     #+BEGIN_SRC bash :exports both :results output
     ( slip39-recovery --bip39 --mnemonic 'zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo wrong' \
-        | slip39-generator --secret - --path '../-3' --encrypt 'password' \
-        | slip39-generator --receive --decrypt 'password' ) 2>&1
+	| slip39-generator --secret - --path '../-3' --encrypt 'password' \
+	| slip39-generator --receive --decrypt 'password' ) 2>&1
     #+END_SRC
 
     #+RESULTS:
@@ -722,8 +725,8 @@ sets of 20 words is difficult, error-prone and time consuming.
     #+LATEX: {\scriptsize
     #+BEGIN_SRC bash :exports both :results output
     ( python3 -m slip39.recovery --bip39 --mnemonic 'zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo wrong' \
-        | python3 -m slip39.generator --secret - --xpub --path "../-2'"  --encrypt 'password' \
-        | python3 -m slip39.generator -v --receive --decrypt 'password' ) 2>&1
+	| python3 -m slip39.generator --secret - --xpub --path "../-2'"  --encrypt 'password' \
+	| python3 -m slip39.generator -v --receive --decrypt 'password' ) 2>&1
     #+END_SRC
 
     #+RESULTS:
@@ -740,12 +743,12 @@ sets of 20 words is difficult, error-prone and time consuming.
     #+LATEX: {\scriptsize
     #+BEGIN_SRC bash :exports both :results output
     ( python3 -m slip39.recovery --bip39 --mnemonic 'zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo wrong' \
-        | python3 -m slip39.generator --secret - --xpub --path "../-2'"  --encrypt 'password' \
-        | python3 -m slip39.generator -v --receive --decrypt 'password' \
-        | while IFS=':' read num json; do \
-            echo "--- $(( num ))"; \
-            echo "$json" | jq -c '.[]'; \
-        done \
+	| python3 -m slip39.generator --secret - --xpub --path "../-2'"  --encrypt 'password' \
+	| python3 -m slip39.generator -v --receive --decrypt 'password' \
+	| while IFS=':' read num json; do \
+	    echo "--- $(( num ))"; \
+	    echo "$json" | jq -c '.[]'; \
+	done \
     ) 2>&1
     #+END_SRC
 
@@ -771,14 +774,14 @@ sets of 20 words is difficult, error-prone and time consuming.
     #+LATEX: {\scriptsize
     #+BEGIN_SRC bash :exports both :results output
     ( python3 -m slip39.recovery --bip39 --mnemonic 'zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo wrong' \
-        | python3 -m slip39.generator --secret - --xpub --path "../-2'"  --encrypt 'password' \
-        | python3 -m slip39.generator -v --receive --decrypt 'password' \
-        | while IFS=':' read num json; do \
-            echo "--- $(( num ))"; \
-            echo "$json" | jq -cr '.[]|"--crypto " + .[0] + " --secret " + .[2]' | while read command; do \
-                python3 -m slip39.cli -v --no-json addresses $command --paths m/0/-2; \
-            done; \
-        done \
+	| python3 -m slip39.generator --secret - --xpub --path "../-2'"  --encrypt 'password' \
+	| python3 -m slip39.generator -v --receive --decrypt 'password' \
+	| while IFS=':' read num json; do \
+	    echo "--- $(( num ))"; \
+	    echo "$json" | jq -cr '.[]|"--crypto " + .[0] + " --secret " + .[2]' | while read command; do \
+		python3 -m slip39.cli -v --no-json addresses $command --paths m/0/-2; \
+	    done; \
+	done \
     ) 2>&1
     #+END_SRC
 
@@ -819,7 +822,7 @@ sets of 20 words is difficult, error-prone and time consuming.
     #+BEGIN_SRC bash :exports both :results output
     secret=$( python3 -m slip39.recovery --bip39 --mnemonic 'zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo wrong' );
     for crypto in BTC ETH; do
-        python3 -m slip39.cli -v --no-json addresses --secret $secret --crypto $crypto --paths "../-2"
+	python3 -m slip39.cli -v --no-json addresses --secret $secret --crypto $crypto --paths "../-2"
     done
     #+END_SRC
 
@@ -842,7 +845,7 @@ sets of 20 words is difficult, error-prone and time consuming.
     #+LATEX: {\scriptsize
     #+BEGIN_SRC bash :exports both :results output
     ( python3 -m slip39.recovery --bip39 --mnemonic 'zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo wrong' \
-        | python3 -m slip39.generator --secret - --xpub --path "../-2'" --crypto BTC
+	| python3 -m slip39.generator --secret - --xpub --path "../-2'" --crypto BTC
     ) 2>&1
     #+END_SRC
 
@@ -882,10 +885,10 @@ sets of 20 words is difficult, error-prone and time consuming.
     single-bit approach vector is ... unlikely. :)
 
 ** The =slip39= module API
-   
+
    Provide SLIP-39 Mnemonic set creation from a 128-bit master secret, and recovery of the secret
    from a subset of the provided Mnemonic set.
-   
+
 *** =slip39.create=
 
     Creates a set of SLIP-39 groups and their mnemonics.
@@ -905,7 +908,7 @@ sets of 20 words is difficult, error-prone and time consuming.
     #+LATEX: }
 
     Outputs a =slip39.Details= namedtuple containing:
-    
+
     #+LATEX: {\scriptsize
     | Key             | Description                                        |
     |-----------------+----------------------------------------------------|
@@ -930,7 +933,7 @@ sets of 20 words is difficult, error-prone and time consuming.
     # We turn off randomness here during SLIP-39 generation to get deterministic phrases;
     # during normal operation, secure entropy is used during mnemonic generation, yielding
     # random phrases, even when the same seed is used multiple times.
-    # 
+    #
     import shamir_mnemonic
     shamir_mnemonic.shamir.RANDOM_BYTES = lambda n: b'\00' * n
 
@@ -940,17 +943,17 @@ sets of 20 words is difficult, error-prone and time consuming.
     master_secret       = b'\xFF' * 16
     passphrase          = b""
     create_details      = slip39.create(
-        "Test", 2, { "Mine": (1,1), "Fam": (2,3) },
-        master_secret=master_secret, passphrase=passphrase, cryptopaths=cryptopaths )
+	"Test", 2, { "Mine": (1,1), "Fam": (2,3) },
+	master_secret=master_secret, passphrase=passphrase, cryptopaths=cryptopaths )
 
     print( tabulate( [
-        [
-            f"{g_name}({g_of}/{len(g_mnems)}) #{g_n+1}:" if l_n == 0 else ""
-        ] + words
-        for g_name,(g_of,g_mnems) in create_details.groups.items()
-        for g_n,mnem in enumerate( g_mnems )
-        for l_n,(line,words) in enumerate(slip39.organize_mnemonic(
-                mnem, label=f"{g_name}({g_of}/{len(g_mnems)}) #{g_n+1}:" ))
+	[
+	    f"{g_name}({g_of}/{len(g_mnems)}) #{g_n+1}:" if l_n == 0 else ""
+	] + words
+	for g_name,(g_of,g_mnems) in create_details.groups.items()
+	for g_n,mnem in enumerate( g_mnems )
+	for l_n,(line,words) in enumerate(slip39.organize_mnemonic(
+		mnem, label=f"{g_name}({g_of}/{len(g_mnems)}) #{g_n+1}:" ))
       ], tablefmt='orgtbl' ))
     #+END_SRC
 
@@ -992,9 +995,9 @@ sets of 20 words is difficult, error-prone and time consuming.
     #+LATEX: {\scriptsize
     #+BEGIN_SRC ipython :session :exports both :results output raw drawer
     print( tabulate( [
-        [ account.path, account.address ]
-        for group in create_details.accounts
-        for account in group
+	[ account.path, account.address ]
+	for group in create_details.accounts
+	for account in group
     ], tablefmt='orgtbl' ))
     #+END_SRC
 
@@ -1010,7 +1013,7 @@ sets of 20 words is difficult, error-prone and time consuming.
     #+LATEX: }
 
 *** =slip39.produce_pdf=
-    
+
     #+LATEX: {\scriptsize
     | Key             | Description                                                         |
     |-----------------+---------------------------------------------------------------------|
@@ -1034,10 +1037,10 @@ sets of 20 words is difficult, error-prone and time consuming.
     (paper_format,orientation),pdf,accounts = slip39.produce_pdf( *create_details )
     pdf_binary = pdf.output()
     print( tabulate( [
-        [ "Orientation:",	orientation ],
-        [ "Paper:",		paper_format ],
-        [ "PDF Pages:",		pdf.pages_count ],
-        [ "PDF Size:",		len( pdf_binary )],
+	[ "Orientation:",	orientation ],
+	[ "Paper:",		paper_format ],
+	[ "PDF Pages:",		pdf.pages_count ],
+	[ "PDF Size:",		len( pdf_binary )],
     ], tablefmt='orgtbl' ))
     #+END_SRC
 
@@ -1103,7 +1106,7 @@ sets of 20 words is difficult, error-prone and time consuming.
 
     Therefore, it is *essential* to remember any non-default (non-empty) passphrase used, separately and
     securely.  Take great care in deciding if you wish to use a passphrase with your SLIP-39 wallet!
-    
+
     #+LATEX: {\scriptsize
     | Key         | Description                                        |
     |-------------+----------------------------------------------------|
@@ -1111,20 +1114,20 @@ sets of 20 words is difficult, error-prone and time consuming.
     | passphrase  | Optional passphrase to decrypt secret Seed Entropy |
     | using_bip39 | Use BIP-39 Seed generation from recover Entropy    |
     #+LATEX: }
-    
+
     #+LATEX: {\scriptsize
     #+BEGIN_SRC ipython :session :exports both :results output raw drawer
     # Recover with the wrong password (on purpose, as a decoy wallet w/ a small amount)
     recoverydecoy       = slip39.recover(
-        create_details.groups['Mine'][1][:] + create_details.groups['Fam'][1][:2],
-        passphrase=b"wrong!"
+	create_details.groups['Mine'][1][:] + create_details.groups['Fam'][1][:2],
+	passphrase=b"wrong!"
     )
     recoverydecoy_hex   = codecs.encode( recoverydecoy, 'hex_codec' ).decode( 'ascii' )
 
     # But, recovering w/ correct passphrase yields our original Seed Entropy
     recoveryvalid       = slip39.recover(
-        create_details.groups['Mine'][1][:] + create_details.groups['Fam'][1][:2],
-        passphrase=passphrase
+	create_details.groups['Mine'][1][:] + create_details.groups['Fam'][1][:2],
+	passphrase=passphrase
     )
     recoveryvalid_hex   = codecs.encode( recoveryvalid, 'hex_codec' ).decode( 'ascii' )
 
@@ -1213,12 +1216,12 @@ sets of 20 words is difficult, error-prone and time consuming.
 
     recovered_seed	= slip39.recover_bip39( entropy_mnemonic, passphrase=passphrase )
     recovered_seed_hex	= codecs.encode( recovered_seed, 'hex_codec' ).decode( 'ascii' )
-    
+
     print( tabulate( [
-        [ "Original Entropy", entropy_hex ],
-        [ "BIP-39 Mnemonic", entropy_mnemonic ],
-        [ "Recovered Entropy", recovered_hex ],
-        [ "Recovered Seed", f"{recovered_seed_hex:.50}..." ],
+	[ "Original Entropy", entropy_hex ],
+	[ "BIP-39 Mnemonic", entropy_mnemonic ],
+	[ "Recovered Entropy", recovered_hex ],
+	[ "Recovered Seed", f"{recovered_seed_hex:.50}..." ],
     ], tablefmt='orgtbl'))
     #+END_SRC
 
@@ -1245,12 +1248,12 @@ sets of 20 words is difficult, error-prone and time consuming.
     #+LATEX: {\scriptsize
     #+BEGIN_SRC ipython :session :exports both :results output raw drawer
     def random_words( n, count=100 ):
-        for _ in range( count ):
-            yield ' '.join( random.choice( bip39_english.wordlist ) for _ in range( n ))
+	for _ in range( count ):
+	    yield ' '.join( random.choice( bip39_english.wordlist ) for _ in range( n ))
 
     successes           = sum(
-        bip39_english.check( m )
-        for i,m in enumerate( random_words( 12, 10000 ))) / 100
+	bip39_english.check( m )
+	for i,m in enumerate( random_words( 12, 10000 ))) / 100
 
     print( tabulate( [
       [ "Valid random 12-word mnemonics:", f"{successes}%" ],
@@ -1333,13 +1336,13 @@ sets of 20 words is difficult, error-prone and time consuming.
     #+LATEX: {\scriptsize
     #+BEGIN_SRC ipython :session :exports both :results output raw drawer
     name,thrs,grps,acct,ub39 = slip39.create(
-        "Test", 2, { "Mine": (1,1), "Fam": (2,3) }, entropy )
+	"Test", 2, { "Mine": (1,1), "Fam": (2,3) }, entropy )
     print( tabulate( [
-        [ f"{g_name}({g_of}/{len(g_mnems)}) #{g_n+1}:" if l_n == 0 else "" ] + words
-        for g_name,(g_of,g_mnems) in grps.items()
-        for g_n,mnem in enumerate( g_mnems )
-        for l_n,(line,words) in enumerate(slip39.organize_mnemonic(
-                mnem, rows=7, cols=3, label=f"{g_name}({g_of}/{len(g_mnems)}) #{g_n+1}:" ))
+	[ f"{g_name}({g_of}/{len(g_mnems)}) #{g_n+1}:" if l_n == 0 else "" ] + words
+	for g_name,(g_of,g_mnems) in grps.items()
+	for g_n,mnem in enumerate( g_mnems )
+	for l_n,(line,words) in enumerate(slip39.organize_mnemonic(
+		mnem, rows=7, cols=3, label=f"{g_name}({g_of}/{len(g_mnems)}) #{g_n+1}:" ))
     ], tablefmt='orgtbl' ))
     #+END_SRC
 
@@ -1384,9 +1387,9 @@ sets of 20 words is difficult, error-prone and time consuming.
     #+LATEX: {\scriptsize
     #+BEGIN_SRC ipython :session :exports both :results output raw drawer
     print( tabulate( [
-        [ account.crypto, account.path, account.address ]
-        for group in create_details.accounts
-        for account in group
+	[ account.crypto, account.path, account.address ]
+	for group in create_details.accounts
+	for account in group
     ], tablefmt='orgtbl', headers=[ "Crypto", "HD Wallet Path:", "Ethereum Address:" ] ))
     #+END_SRC
 
@@ -1416,7 +1419,7 @@ sets of 20 words is difficult, error-prone and time consuming.
     recseed             = slip39.recover( mnem_mine + mnem_fam[:2] )
     recseed_hex         = codecs.encode( recseed, 'hex_codec' ).decode( 'ascii' )
     print( tabulate( [
-        [ f"{len(recseed)*8}-bit Seed:", f"{recseed_hex}" ]
+	[ f"{len(recseed)*8}-bit Seed:", f"{recseed_hex}" ]
     ], tablefmt='orgtbl' ))
     #+END_SRC
 
@@ -1435,9 +1438,9 @@ sets of 20 words is difficult, error-prone and time consuming.
     #+BEGIN_SRC ipython :session :exports both :results output raw drawer
     slip39_eth_hd       = slip39.account( recseed, 'ETH', path )
     print( tabulate( [
-        [ f"{len(slip39_eth_hd.key)*4}-bit derived key path:", f"{path}" ],
-        [ "Produces private key: ", f"{slip39_eth_hd.key}" ],
-        [ "Yields Ethereum address:", f"{slip39_eth_hd.address}" ],
+	[ f"{len(slip39_eth_hd.key)*4}-bit derived key path:", f"{path}" ],
+	[ "Produces private key: ", f"{slip39_eth_hd.key}" ],
+	[ "Yields Ethereum address:", f"{slip39_eth_hd.address}" ],
     ], tablefmt='orgtbl' ))
     #+END_SRC
 
@@ -1484,7 +1487,7 @@ sets of 20 words is difficult, error-prone and time consuming.
    accounts to /any/ standard BIP-39 hardware wallet!  However, the SLIP-39 Mnemonics are *not*
    compatible with standard SLIP-39 wallets like the Trezor "Model T" -- you have to use the
    recovered BIP-39 Mnemonic phrase to recover the hardware wallet.
-   
+
 *** Emergency Recovery: Using Recovered Paper Wallets
 
     There is one approach which can preserve an original BIP-39 /generated/ wallet addresses, using
@@ -1502,7 +1505,7 @@ sets of 20 words is difficult, error-prone and time consuming.
     #+LATEX: {\scriptsize
     #+BEGIN_SRC bash :exports both :results output
     ( python3 -m slip39.recovery --bip39 -v \
-        --mnemonic "zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo wrong" 
+	--mnemonic "zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo wrong"
     ) 2>&1
     #+END_SRC
     #+RESULTS:
@@ -1512,39 +1515,39 @@ sets of 20 words is difficult, error-prone and time consuming.
     #+LATEX: }
 
     Then we can generate a 59-word SLIP-39 mnemonic set from the 512-bit secret:
-   
+
     #+LATEX: {\scriptsize
     #+BEGIN_SRC bash :exports both :results output
     ( python3 -m slip39.recovery --bip39 \
-        --mnemonic "zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo wrong" \
+	--mnemonic "zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo wrong" \
       | python3 -m slip39 --secret - --no-card -v
     ) 2>&1 | tail -20
     #+END_SRC
     #+RESULTS:
     #+begin_example
-    2022-11-06 06:18:26 slip39                7 patent    19 glasses   31 aunt      43 smoking   55 burning   
-    2022-11-06 06:18:26 slip39                8 diminish  20 replace   32 holiday   44 burden    56 military  
-    2022-11-06 06:18:26 slip39                9 duke      21 privacy   33 ugly      45 body      57 crucial   
-    2022-11-06 06:18:26 slip39               10 civil     22 idle      34 burden    46 burning   58 cultural  
-    2022-11-06 06:18:26 slip39               11 bolt      23 editor    35 photo     47 numerous  59 adult     
-    2022-11-06 06:18:26 slip39               12 scared    24 isolate   36 inherit   48 square    
-    2022-11-06 06:18:26 slip39           6th  1 alto      13 traveler  25 level     37 carve     49 away      
-    2022-11-06 06:18:26 slip39                2 acid      14 damage    26 symbolic  38 image     50 similar   
-    2022-11-06 06:18:26 slip39                3 decision  15 pecan     27 dance     39 segment   51 public    
-    2022-11-06 06:18:26 slip39                4 spider    16 robin     28 unfold    40 document  52 picture   
-    2022-11-06 06:18:26 slip39                5 acquire   17 funding   29 genre     41 blanket   53 cage      
-    2022-11-06 06:18:26 slip39                6 image     18 news      30 shadow    42 herd      54 hanger    
-    2022-11-06 06:18:26 slip39                7 hairy     19 hesitate  31 filter    43 frost     55 relate    
-    2022-11-06 06:18:26 slip39                8 silent    20 tackle    32 phrase    44 year      56 improve   
-    2022-11-06 06:18:26 slip39                9 believe   21 false     33 pancake   45 inside    57 tofu      
-    2022-11-06 06:18:26 slip39               10 ending    22 teammate  34 reunion   46 cricket   58 science   
-    2022-11-06 06:18:26 slip39               11 quantity  23 order     35 device    47 budget    59 fishing   
-    2022-11-06 06:18:26 slip39               12 erode     24 eyebrow   36 ultimate  48 retreat   
+    2022-11-06 06:18:26 slip39                7 patent    19 glasses   31 aunt      43 smoking   55 burning
+    2022-11-06 06:18:26 slip39                8 diminish  20 replace   32 holiday   44 burden    56 military
+    2022-11-06 06:18:26 slip39                9 duke      21 privacy   33 ugly      45 body      57 crucial
+    2022-11-06 06:18:26 slip39               10 civil     22 idle      34 burden    46 burning   58 cultural
+    2022-11-06 06:18:26 slip39               11 bolt      23 editor    35 photo     47 numerous  59 adult
+    2022-11-06 06:18:26 slip39               12 scared    24 isolate   36 inherit   48 square
+    2022-11-06 06:18:26 slip39           6th  1 alto      13 traveler  25 level     37 carve     49 away
+    2022-11-06 06:18:26 slip39                2 acid      14 damage    26 symbolic  38 image     50 similar
+    2022-11-06 06:18:26 slip39                3 decision  15 pecan     27 dance     39 segment   51 public
+    2022-11-06 06:18:26 slip39                4 spider    16 robin     28 unfold    40 document  52 picture
+    2022-11-06 06:18:26 slip39                5 acquire   17 funding   29 genre     41 blanket   53 cage
+    2022-11-06 06:18:26 slip39                6 image     18 news      30 shadow    42 herd      54 hanger
+    2022-11-06 06:18:26 slip39                7 hairy     19 hesitate  31 filter    43 frost     55 relate
+    2022-11-06 06:18:26 slip39                8 silent    20 tackle    32 phrase    44 year      56 improve
+    2022-11-06 06:18:26 slip39                9 believe   21 false     33 pancake   45 inside    57 tofu
+    2022-11-06 06:18:26 slip39               10 ending    22 teammate  34 reunion   46 cricket   58 science
+    2022-11-06 06:18:26 slip39               11 quantity  23 order     35 device    47 budget    59 fishing
+    2022-11-06 06:18:26 slip39               12 erode     24 eyebrow   36 ultimate  48 retreat
     2022-11-06 06:18:26 slip39.layout    ETH    m/44'/60'/0'/0/0    : 0xfc2077CA7F403cBECA41B1B0F62D91B5EA631B5E
     2022-11-06 06:18:26 slip39.layout    BTC    m/84'/0'/0'/0/0     : bc1qk0a9hr7wjfxeenz9nwenw9flhq0tmsf6vsgnn2
     #+end_example
     #+LATEX: }
-    
+
     This =0xfc20..1B5E= address is the same Ethereum address as is recovered on a Trezor using this
     BIP-39 mnemonic phrase.  Thus, we can generate "Paper Wallets" for the desired Cryptocurrency
     accounts, and recover the funds.
@@ -1587,7 +1590,7 @@ sets of 20 words is difficult, error-prone and time consuming.
     #+LATEX: {\scriptsize3
     #+BEGIN_SRC bash :exports both :results output
     ( python3 -m slip39.recovery --bip39 --entropy -v \
-        --mnemonic "zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo wrong" 
+	--mnemonic "zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo wrong"
     ) 2>&1
     #+END_SRC
     #+RESULTS:
@@ -1605,30 +1608,30 @@ sets of 20 words is difficult, error-prone and time consuming.
     #+LATEX: {\scriptsize3
     #+BEGIN_SRC bash :exports both :results output
     ( python3 -m slip39.recovery --bip39 --entropy \
-        --mnemonic "zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo wrong" \
+	--mnemonic "zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo wrong" \
       | python3 -m slip39 --secret - --no-card -v
     ) 2>&1 | tail -20
     #+END_SRC
     #+RESULTS:
     #+begin_example
-    2022-11-06 06:18:37 slip39                4 skin      11 ounce     18 guilt     
-    2022-11-06 06:18:37 slip39                5 airline   12 racism    19 ecology   
-    2022-11-06 06:18:37 slip39                6 depict    13 picture   20 thumb     
-    2022-11-06 06:18:37 slip39                7 counter   14 afraid    
-    2022-11-06 06:18:37 slip39           5th  1 boundary   8 seafood   15 threaten  
-    2022-11-06 06:18:37 slip39                2 roster     9 welfare   16 olympic   
-    2022-11-06 06:18:37 slip39                3 decision  10 voting    17 detailed  
-    2022-11-06 06:18:37 slip39                4 snake     11 orbit     18 muscle    
-    2022-11-06 06:18:37 slip39                5 cubic     12 engage    19 toxic     
-    2022-11-06 06:18:37 slip39                6 corner    13 therapy   20 froth     
-    2022-11-06 06:18:37 slip39                7 upgrade   14 smirk     
-    2022-11-06 06:18:37 slip39           6th  1 boundary   8 review    15 swimming  
-    2022-11-06 06:18:37 slip39                2 roster     9 easy      16 dive      
-    2022-11-06 06:18:37 slip39                3 decision  10 both      17 enlarge   
-    2022-11-06 06:18:37 slip39                4 spider    11 axle      18 rumor     
-    2022-11-06 06:18:37 slip39                5 cause     12 penalty   19 cargo     
-    2022-11-06 06:18:37 slip39                6 elite     13 budget    20 chemical  
-    2022-11-06 06:18:37 slip39                7 glen      14 loan      
+    2022-11-06 06:18:37 slip39                4 skin      11 ounce     18 guilt
+    2022-11-06 06:18:37 slip39                5 airline   12 racism    19 ecology
+    2022-11-06 06:18:37 slip39                6 depict    13 picture   20 thumb
+    2022-11-06 06:18:37 slip39                7 counter   14 afraid
+    2022-11-06 06:18:37 slip39           5th  1 boundary   8 seafood   15 threaten
+    2022-11-06 06:18:37 slip39                2 roster     9 welfare   16 olympic
+    2022-11-06 06:18:37 slip39                3 decision  10 voting    17 detailed
+    2022-11-06 06:18:37 slip39                4 snake     11 orbit     18 muscle
+    2022-11-06 06:18:37 slip39                5 cubic     12 engage    19 toxic
+    2022-11-06 06:18:37 slip39                6 corner    13 therapy   20 froth
+    2022-11-06 06:18:37 slip39                7 upgrade   14 smirk
+    2022-11-06 06:18:37 slip39           6th  1 boundary   8 review    15 swimming
+    2022-11-06 06:18:37 slip39                2 roster     9 easy      16 dive
+    2022-11-06 06:18:37 slip39                3 decision  10 both      17 enlarge
+    2022-11-06 06:18:37 slip39                4 spider    11 axle      18 rumor
+    2022-11-06 06:18:37 slip39                5 cause     12 penalty   19 cargo
+    2022-11-06 06:18:37 slip39                6 elite     13 budget    20 chemical
+    2022-11-06 06:18:37 slip39                7 glen      14 loan
     2022-11-06 06:18:37 slip39.layout    ETH    m/44'/60'/0'/0/0    : 0x824b174803e688dE39aF5B3D7Cd39bE6515A19a1
     2022-11-06 06:18:37 slip39.layout    BTC    m/84'/0'/0'/0/0     : bc1q9yscq3l2yfxlvnlk3cszpqefparrv7tk24u6pl
     #+end_example
@@ -1641,30 +1644,30 @@ sets of 20 words is difficult, error-prone and time consuming.
     #+LATEX: {\scriptsize3
     #+BEGIN_SRC bash :exports both :results output
     ( python3 -m slip39.recovery --bip39 --entropy \
-        --mnemonic "zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo wrong" \
+	--mnemonic "zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo wrong" \
       | python3 -m slip39 --secret - --no-card -v --using-bip39
     ) 2>&1 | tail -20
     #+END_SRC
     #+RESULTS:
     #+begin_example
-    2022-11-06 06:18:46 slip39                4 skin      11 fiscal    18 prize     
-    2022-11-06 06:18:46 slip39                5 buyer     12 crucial   19 legal     
-    2022-11-06 06:18:46 slip39                6 remind    13 seafood   20 game      
-    2022-11-06 06:18:46 slip39                7 rhyme     14 spew      
-    2022-11-06 06:18:46 slip39           5th  1 trial      8 evil      15 pregnant  
-    2022-11-06 06:18:46 slip39                2 regret     9 class     16 enjoy     
-    2022-11-06 06:18:46 slip39                3 decision  10 fiscal    17 grocery   
-    2022-11-06 06:18:46 slip39                4 snake     11 timber    18 style     
-    2022-11-06 06:18:46 slip39                5 debris    12 busy      19 finance   
-    2022-11-06 06:18:46 slip39                6 merit     13 depict    20 peasant   
-    2022-11-06 06:18:46 slip39                7 agree     14 junk      
-    2022-11-06 06:18:46 slip39           6th  1 trial      8 husky     15 cricket   
-    2022-11-06 06:18:46 slip39                2 regret     9 alive     16 expand    
-    2022-11-06 06:18:46 slip39                3 decision  10 intimate  17 downtown  
-    2022-11-06 06:18:46 slip39                4 spider    11 swing     18 escape    
-    2022-11-06 06:18:46 slip39                5 being     12 employer  19 teammate  
-    2022-11-06 06:18:46 slip39                6 race      13 zero      20 climate   
-    2022-11-06 06:18:46 slip39                7 stadium   14 friar     
+    2022-11-06 06:18:46 slip39                4 skin      11 fiscal    18 prize
+    2022-11-06 06:18:46 slip39                5 buyer     12 crucial   19 legal
+    2022-11-06 06:18:46 slip39                6 remind    13 seafood   20 game
+    2022-11-06 06:18:46 slip39                7 rhyme     14 spew
+    2022-11-06 06:18:46 slip39           5th  1 trial      8 evil      15 pregnant
+    2022-11-06 06:18:46 slip39                2 regret     9 class     16 enjoy
+    2022-11-06 06:18:46 slip39                3 decision  10 fiscal    17 grocery
+    2022-11-06 06:18:46 slip39                4 snake     11 timber    18 style
+    2022-11-06 06:18:46 slip39                5 debris    12 busy      19 finance
+    2022-11-06 06:18:46 slip39                6 merit     13 depict    20 peasant
+    2022-11-06 06:18:46 slip39                7 agree     14 junk
+    2022-11-06 06:18:46 slip39           6th  1 trial      8 husky     15 cricket
+    2022-11-06 06:18:46 slip39                2 regret     9 alive     16 expand
+    2022-11-06 06:18:46 slip39                3 decision  10 intimate  17 downtown
+    2022-11-06 06:18:46 slip39                4 spider    11 swing     18 escape
+    2022-11-06 06:18:46 slip39                5 being     12 employer  19 teammate
+    2022-11-06 06:18:46 slip39                6 race      13 zero      20 climate
+    2022-11-06 06:18:46 slip39                7 stadium   14 friar
     2022-11-06 06:18:46 slip39.layout    ETH    m/44'/60'/0'/0/0    : 0xfc2077CA7F403cBECA41B1B0F62D91B5EA631B5E
     2022-11-06 06:18:46 slip39.layout    BTC    m/84'/0'/0'/0/0     : bc1qk0a9hr7wjfxeenz9nwenw9flhq0tmsf6vsgnn2
     #+end_example
@@ -1724,7 +1727,7 @@ sets of 20 words is difficult, error-prone and time consuming.
    Then, there are several ways to run the GUI:
    : $ python3 -m slip39.gui     # Execute the python slip39.gui module main method
    : $ slip39-gui                # Run the main function provided by the slip39.gui module
-   
+
 *** The macOS/win32 =SLIP-39.app= GUI
 
     You can build the native macOS and win32 =SLIP-39.app= App.
@@ -1754,9 +1757,9 @@ sets of 20 words is difficult, error-prone and time consuming.
     : $ cd src
     : $ git clone git@github.com:pjkundert/python-slip39.git
 
-**** Code Signing    
+**** Code Signing
 
-     The MMC (Microsoft Management Console) is used to store your code-signing certificates.  
+     The MMC (Microsoft Management Console) is used to store your code-signing certificates.
      See [[https://stackoverflow.com/questions/19879812/signing-exe-with-cer-file-what-is-my-certificates-name-that-signtool-exe-is][stackoverflow.com]] for how to enable its Certificate management.
 
 * Licensing
@@ -1808,7 +1811,7 @@ sets of 20 words is difficult, error-prone and time consuming.
 
     Take the output, and place it in the file =~/.crypto-licensing/python-slip39.crypto-license= on
     your air-gapped computer.
-    
+
 *** Obtaining an Advanced Feature "master" License
 
     On your primary computer, open the provided URL in a browser.  The URL contains the details of

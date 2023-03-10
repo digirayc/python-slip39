@@ -4,9 +4,9 @@ import glob
 import fnmatch
 
 
-# 
+#
 # All platforms
-# 
+#
 HERE				= os.path.dirname( os.path.abspath( __file__ ))
 
 install_requires		= open( os.path.join( HERE, "requirements.txt" )).readlines()
@@ -30,15 +30,15 @@ else:
     from setuptools import setup
     print( f"sys.platform {sys.platform}: Using setuptools.setup" )
 
-# 
+#
 # For various platforms, extra setup options are required.  Collect them here
-# 
+#
 extra_options			= {}
 
-# 
+#
 # cx_Freeze options -- Windows .exe/.msi support
 #     cx-freeze.readthedocs.io/en/latest/setup_script.html
-# 
+#
 mainscript			= "SLIP-39.py"
 copyright			= "Copyright (c) 2022 Perry Kundert",
 
@@ -64,7 +64,7 @@ if sys.platform == 'win32':
 
     msi_data			= dict(
         Shortcut	= [
-        	shortcut,
+                shortcut,
         ],
         #Icon		= [
         #    icon_win,
@@ -152,7 +152,7 @@ console_scripts			= [
 ]
 
 entry_points			= {
-    'console_scripts': 		console_scripts,
+    'console_scripts':          console_scripts,
 }
 
 package_dir			= {
@@ -192,7 +192,7 @@ sets of 20 words is difficult, error-prone and time consuming.
 # Hardware Wallet "Seed" Configuration
 
 >  Your keys, your Bitcoin.  Not your keys, not your Bitcoin.
->  
+>
 >  ---Andreas Antonopoulos
 
 The [python-slip39][1] project (and the [slip39-app][2]) exists to assist in the safe creation,
@@ -206,7 +206,7 @@ phrases, and outputs a single PDF containing all the required printable cards to
 
 On an secure (ideally air-gapped) computer, new seeds can /safely/ be generated (*without*
 trusting this program) and the PDF saved to a USB drive for printing (or directly printed without
-the file being saved to disk.).  Presently, =slip39= can output example ETH, BTC, LTC, DOGE, BNB,
+the file being saved to disk.).  Presently, =slip39= can output example ETH, BTC, LTC, CY, DOGE, BNB,
 CRO and XRP addresses derived from the seed, to /illustrate/ what accounts are associated with the
 backed-up seed.  Recovery of the seed to a [trezor-model-t][3] is simple, by entering the mnemonics
 right on the device.
@@ -372,7 +372,7 @@ setup(
     long_description		= long_description,
     long_description_content_type = long_description_content_type,
     license			= "Dual License; GPLv3 and Proprietary",
-    keywords			= "Ethereum Bitcoin Dogecoin Litecoin cryptocurrency SLIP-39 BIP-39 seed recovery PDF BIP-38 paper wallet",
+    keywords			= "Ethereum Bitcoin Dogecoin Litecoin Cyberyen cryptocurrency SLIP-39 BIP-39 seed recovery PDF BIP-38 paper wallet",
     url				= "https://github.com/pjkundert/python-slip39",
     classifiers			= classifiers,
     python_requires		= ">=3.9",

@@ -15,6 +15,9 @@ Ledger, etc.  compatible) displayed are:
 | Recover   | LTC    | Bech32   | m/84'/  2'/0'/0/0 | ltc1... |         |
 |           |        | SegWit   | m/44'/  2'/0'/0/0 | M...    |         |
 |           |        | Legacy   | m/44'/  2'/0'/0/0 | L...    |         |
+| Recover   | CY     | Bech32   | m/84'/  2'/0'/0/0 | cy1...  |         |
+|           |        | SegWit   | m/44'/  2'/0'/0/0 | A...    |         |
+|           |        | Legacy   | m/44'/  2'/0'/0/0 | C...    |         |
 | Recover   | DOGE   | Legacy   | m/44'/  3'/0'/0/0 | D...    |         |
 | Pro       | BNB    | Legacy   | m/44'/ 60'/0'/0/0 | 0x...   | Beta    |
 | Pro       | CRO    | Bech32   | m/44'/ 60'/0'/0/0 | crc1... | Beta    |
@@ -27,7 +30,7 @@ purposes only, to illustrate *which* Wallets are derived from this Seed.
 * Semantics
 
   By default, we produce address semantics compatible with what the Trezor hardware wallet produces
-  (ie. Bech32, for =BTC= and =LTC=).  The underlying =slip39= library is capable of producing the
+  (ie. Bech32, for =BTC=, =LTC= and =CY=).  The underlying =slip39= library is capable of producing the
   Legacy and SegWit forms of these addresses, if necessary.
 
 * Cryptocurrencies In Beta Testing
@@ -35,4 +38,3 @@ purposes only, to illustrate *which* Wallets are derived from this Seed.
   The BNB and CRO wallet addresses are also supported, if desired (currently in Beta testing
   quality).  Generated Paper Wallets should be /tested/ to ensure that generated and recovered
   private keys are valid.
-

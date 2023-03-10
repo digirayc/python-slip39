@@ -76,6 +76,18 @@ def test_account_smoke():
     assert acct.address == 'MPULjvY9dNjpNkgbwhfJtD7N6Lbfam1XsP'
     assert acct.path == "m/44'/2'/0'/0/0"
 
+    acct			= account( SEED_XMAS, crypto='Cyberyen' )
+    assert acct.address == 'cy1qx2v2chslussfk37k9q8ktmzkstvggakgqtpzrm'
+    assert acct.path == "m/84'/2'/0'/0/0"
+
+    acct			= account( SEED_XMAS, crypto='Cyberyen', format='Legacy' )
+    assert acct.address == 'CReKRu93LiNmF51y5HoDjxECv3ETDq71FD'
+    assert acct.path == "m/44'/2'/0'/0/0"
+
+    acct			= account( SEED_XMAS, crypto='Cyberyen', format='SegWit' )
+    assert acct.address == 'A6KodQhCXKDLXanykJ79sXh68TzWSp44FR'
+    assert acct.path == "m/44'/2'/0'/0/0"
+
     acct			= account( SEED_XMAS, crypto='Dogecoin' )
     assert acct.address == 'DQCnF49GwQ5auL3u5c2uow62XS57RCA2r1'
     assert acct.path == "m/44'/3'/0'/0/0"
@@ -340,6 +352,7 @@ def test_addressgroups():
             ('ETH',	".../-3"),
             ('BTC',	".../-3"),
             ('LTC',	".../-3"),
+            ('CY',      ".../-3"),
             ('Doge',	".../-3"),
             ('CRO',	".../-3"),
             ('Binance',	".../-3"),
@@ -351,6 +364,7 @@ def test_addressgroups():
         (0, (("ETH",  "m/44'/60'/0'/0/0", "0x824b174803e688dE39aF5B3D7Cd39bE6515A19a1"),
              ("BTC",  "m/84'/0'/0'/0/0",  "bc1q9yscq3l2yfxlvnlk3cszpqefparrv7tk24u6pl"),
              ('LTC',  "m/84'/2'/0'/0/0",  'ltc1qe5m2mst9kjcqtfpapaanaty40qe8xtusmq4ake'),
+             ('CY' ,  "m/84'/2'/0'/0/0",  'cy1qxew0lnc5g3s2pkv3alwyxzrfuc3ypxh0mjyz0p'),
              ('DOGE', "m/44'/3'/0'/0/0",  'DN8PNN3dipSJpLmyxtGe4EJH38EhqF8Sfy'),
              ('CRO',  "m/84'/60'/0'/0/0", 'crc1q4hdzumgzgfda84hvt67e4znnfxxnnnc42jgqt9'),
              ('BNB',  "m/44'/60'/0'/0/0", '0x824b174803e688dE39aF5B3D7Cd39bE6515A19a1'),
@@ -358,6 +372,7 @@ def test_addressgroups():
         (1, (("ETH",  "m/44'/60'/0'/0/1", "0x8D342083549C635C0494d3c77567860ee7456963"),
              ("BTC",  "m/84'/0'/0'/0/1",  "bc1qnec684yvuhfrmy3q856gydllsc54p2tx9w955c"),
              ('LTC',  "m/84'/2'/0'/0/1",  'ltc1qm0hwvvk28wlyfu3sed66e9yyvmwm35xtfexva3'),
+             ('CY',   "m/84'/2'/0'/0/1",  'cy1q85yr0pz0d4dfcvknnaekx0pwusvvzxqje3s4gp'),
              ('DOGE', "m/44'/3'/0'/0/1",  'DJYE9WWaCA1CbV9x23qkcgNX7Yr9YjCebA'),
              ('CRO',  "m/84'/60'/0'/0/1", 'crc1qalq0kk8j8mwljneavgmqytcv63vnjjhsn8cfhs'),
              ('BNB',  "m/44'/60'/0'/0/1", '0x8D342083549C635C0494d3c77567860ee7456963'),
@@ -365,6 +380,7 @@ def test_addressgroups():
         (2, (("ETH",  "m/44'/60'/0'/0/2", "0x52787E24965E1aBd691df77827A3CfA90f0166AA"),
              ("BTC",  "m/84'/0'/0'/0/2",  "bc1q2snj0zcg23dvjpw7m9lxtu0ap0hfl5tlddq07j"),
              ('LTC',  "m/84'/2'/0'/0/2",  'ltc1qx3r3efsmupn34gmwu25fu39tn4h79cjfwvlpfu'),
+             ('CY',   "m/84'/2'/0'/0/2",  'cy1qnrmdmlma5alkvfavpkxe6w055d302zyvtly9d6'),
              ('DOGE', "m/44'/3'/0'/0/2",  'DQfJcJzLFW9LJPJXNkLeq1WqPfLsRq47Jj'),
              ('CRO',  "m/84'/60'/0'/0/2", 'crc1qnr2z9wv2z5p54k8sm35fv7m5u86sutwa7m7e99'),
              ('BNB',  "m/44'/60'/0'/0/2", '0x52787E24965E1aBd691df77827A3CfA90f0166AA'),
@@ -372,6 +388,7 @@ def test_addressgroups():
         (3, (("ETH",  "m/44'/60'/0'/0/3", "0xc2442382Ae70c77d6B6840EC6637dB2422E1D44e"),
              ("BTC",  "m/84'/0'/0'/0/3", "bc1qxwekjd46aa5n0s3dtsynvtsjwsne7c5f5w5dsd"),
              ('LTC',  "m/84'/2'/0'/0/3", 'ltc1qnqzyear8kct0yjzupe2pxtq0mwee5kl642mj78'),
+             ('CY',   "m/84'/2'/0'/0/3", 'cy1qmv3xplc2x4ygyfjuy42fl435fd57eff4lqk0jw'),
              ('DOGE', "m/44'/3'/0'/0/3", 'DLVPiM5763cyNJfoa13cv4kV3b87FgVMCS'),
              ('CRO',  "m/84'/60'/0'/0/3", 'crc1qtlwuk2p8znv43xpxvupe7ye3ueuxen3475yn8n'),
              ('BNB',  "m/44'/60'/0'/0/3", '0xc2442382Ae70c77d6B6840EC6637dB2422E1D44e'),
